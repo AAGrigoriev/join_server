@@ -13,9 +13,9 @@ class table {
  public:
   db_result insert(std::size_t id, std::string_view name);
   void truncate();
-  friend std::string intersect(const table& left, const table& right);
-  friend std::string symmetric_difference(const table& left,
-                                          const table& right);
+  friend std::string intersect_impl(const table& left, const table& right);
+  friend std::string symmetric_difference_impl(const table& left,
+                                               const table& right);
 
  private:
   std::map<std::size_t, std::string> table_;

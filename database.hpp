@@ -8,10 +8,11 @@
 namespace db {
 
 class database {
+ public:
   db_result insert(std::string& table_id, std::size_t id, std::string& field);
   db_result truncate(std::string& table_id);
   std::string intersect() const;
-  std::string sym_diff() const;
+  std::string symmetric_difference() const;
 
  private:
   std::map<std::string, table> tables_;

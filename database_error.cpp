@@ -1,6 +1,7 @@
 #include "database_error.hpp"
 
 namespace {
+
 struct db_err_category : std::error_category {
   const char* name() const noexcept override;
   std::string message(int ev) const override;
@@ -23,10 +24,13 @@ std::string db_err_category::message(int v) const {
   }
 }
 
-const db_err_category db_err_category_{};
+const auto& create_category() {
+  const static db_err_category db_err_category_;
+  return db_err_category_;
+}
 
 }  // namespace
 
 std::error_code make_error_code(db_errc e) {
-  return {static_cast<int>(e), db_err_category_};
+  return {static_cast<int>(e), create_category()};
 }
