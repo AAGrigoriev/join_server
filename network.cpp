@@ -45,12 +45,23 @@ void session::do_read() {
           std::string result(std::move(temp_string_) +
                              std::string(buffer_.begin(), it.base()));
           temp_string_ = std::string(it.base() + 1, buffer_.end());
-          handler_(result);
+          auto res = handler_(result);
+          do_write(res);
         } else {
           temp_string_.append(buffer_.begin(), buffer_.end());
+          do_read();
         }
-        do_read();
       });
+}
+
+void session::do_write(std::string_view data) {
+  auto self(shared_from_this());
+  socket_.async_send(boost::asio::buffer(data.data(), data.size()),
+                     [this, self](boost::system::error_code ec, std::size_t) {
+                       if (!ec) {
+                         do_read();
+                       }
+                     });
 }
 
 }  // namespace nett

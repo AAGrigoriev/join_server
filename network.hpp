@@ -41,6 +41,7 @@ class session : std::enable_shared_from_this<session> {
  private:
   session(tcp::socket, handler_t);
   void do_read();
+  void do_write(std::string_view data);
 
  private:
   tcp::socket socket_;

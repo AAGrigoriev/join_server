@@ -4,7 +4,7 @@
 
 namespace db {
 
-db_result database::insert(std::string& table_id,
+db_result database::insert(const std::string& table_id,
                            std::size_t id,
                            std::string& field) {
   if (!tables_.contains(table_id)) {
@@ -14,13 +14,13 @@ db_result database::insert(std::string& table_id,
   return tables_[table_id].insert(id, field);
 }
 
-db_result database::truncate(std::string& table_id) {
+db_result database::truncate(const std::string& table_id) {
   if (!tables_.contains(table_id)) {
     return db_result(make_error_code(db_errc::wrong_table_error), table_id);
   }
 
   tables_[table_id].truncate();
-  return {};
+  return {std::error_code(), "OK"};
 }
 
 std::string database::intersect() const {
