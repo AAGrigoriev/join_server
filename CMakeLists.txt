@@ -24,8 +24,7 @@ add_executable(join_server
 add_executable(unit_tests
     tests/unit_tests.cpp
     parsing.hpp
-    database.hpp
-    database.cpp)
+    table.cpp)
 
 target_link_libraries(join_server taocpp::pegtl ${Boost_LIBRARIES})
 
