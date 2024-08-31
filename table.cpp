@@ -13,8 +13,9 @@ db_result table::insert(std::size_t id, std::string_view field) {
   std::unique_lock _(mutex_);
   auto result = table_.try_emplace(id, field);
 
-  return db_result{make_error_code(db_errc::duplicate_error),
-                   result.second ? "OK" : ""};
+  return result.second
+             ? db_result{std::error_code{}, "OK"}
+             : db_result{make_error_code(db_errc::duplicate_error), ""};
 }
 
 void table::truncate() {
@@ -61,7 +62,7 @@ std::string symmetric_difference_impl(const table& left, const table& right) {
   while (left_beg != right_beg) {
     if (right_beg == right.table_.end()) {
       std::for_each(left_beg, left.table_.end(), [&result](const auto& pair) {
-        result << pair.first << comma_token << pair.second << newline_token;
+        result << pair.first << newline_token;
       });
       return result.str();
     }

@@ -21,5 +21,32 @@ add_executable(join_server
     database.cpp
 )
 
+add_executable(unit_tests
+    tests/unit_tests.cpp
+    parsing.hpp
+    database.hpp
+    database.cpp)
+
 target_link_libraries(join_server taocpp::pegtl ${Boost_LIBRARIES})
+
+
+target_link_libraries(unit_tests
+    gtest
+    phtread)
+
+install(TARGETS join_server RUNTIME DESTINATION bin)
+
+set(CPACK_GENERATOR DEB)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+set(CPACK_PACKAGE_CONTACT grigormaklaud@gmail.com)
+
+include(CPack)
+
+enable_testing()
+
+add_test(unit_tests unit_tests)
 

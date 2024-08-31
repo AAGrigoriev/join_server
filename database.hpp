@@ -12,7 +12,7 @@ class database {
   db_result insert(const std::string& table_id,
                    std::size_t id,
                    std::string& field);
-  db_result truncate(std::string& table_id);
+  db_result truncate(const std::string& table_id);
   std::string intersect() const;
   std::string symmetric_difference() const;
 
