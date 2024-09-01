@@ -19,7 +19,7 @@ class table {
 
  private:
   std::map<std::size_t, std::string> table_;
-  std::shared_mutex mutex_;
+  mutable std::shared_mutex mutex_;
 };
 
 }  // namespace db

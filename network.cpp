@@ -13,13 +13,13 @@ void server::do_accept() {
   acceptor_.async_accept(
       [this](boost::system::error_code ec, tcp::socket socket) {
         if (!ec) {
-          std::make_shared<session>(socket, handler_)->start();
+          auto session = session::create(std::move(socket), handler_);
         }
         do_accept();
       });
 }
 
-session::session_pointer session::create(tcp::socket socket,
+session::session_pointer session::create(tcp::socket&& socket,
                                          handler_t handler) {
   return session_pointer(new session(std::move(socket), std::move(handler)));
 }

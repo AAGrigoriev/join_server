@@ -24,14 +24,16 @@ add_executable(join_server
 add_executable(unit_tests
     tests/unit_tests.cpp
     parsing.hpp
-    table.cpp)
+    table.hpp
+    table.cpp
+    database_error.cpp
+    database_error.hpp)
 
 target_link_libraries(join_server taocpp::pegtl ${Boost_LIBRARIES})
 
 
 target_link_libraries(unit_tests
-    gtest
-    phtread)
+    gtest)
 
 install(TARGETS join_server RUNTIME DESTINATION bin)
 

@@ -65,6 +65,7 @@ TEST(operation, symmetric_difference) {
 
   fill_table_a(a);
   fill_table_b(b);
+
   auto testing_result = symmetric_difference_impl(a, b);
   std::string expected_result =
       "0,lean\n"

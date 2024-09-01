@@ -4,6 +4,8 @@
 #include <mutex>
 #include <sstream>
 
+#include "database_error.hpp"
+
 namespace db {
 
 constexpr std::string_view comma_token = ",";
@@ -62,7 +64,7 @@ std::string symmetric_difference_impl(const table& left, const table& right) {
   while (left_beg != right_beg) {
     if (right_beg == right.table_.end()) {
       std::for_each(left_beg, left.table_.end(), [&result](const auto& pair) {
-        result << pair.first << newline_token;
+        result << pair.first << comma_token << pair.second << newline_token;
       });
       return result.str();
     }

@@ -34,7 +34,7 @@ class session : std::enable_shared_from_this<session> {
  public:
   using session_pointer = std::shared_ptr<session>;
 
-  static session_pointer create(tcp::socket, handler_t handler);
+  static session_pointer create(tcp::socket&&, handler_t);
 
   void start();
 
